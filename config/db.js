@@ -5,6 +5,7 @@ dotenv.config();
 
 /*
 db berfungsi untuk melakukan setup koneksi ke database
+terhubung dengan config dotenv
 */
 
 const connection = mysql.createConnection({
