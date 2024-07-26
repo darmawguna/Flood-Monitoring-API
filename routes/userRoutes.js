@@ -10,6 +10,7 @@ contoh : localhost:3000/users
 */
 
 // Route untuk Management USER
+// router.get("/", getAllUsers);
 router.get("/", getAllUsers);
 router.get("/:id", getUser);
 router.post("/", createUser);

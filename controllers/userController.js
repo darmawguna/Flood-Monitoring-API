@@ -7,10 +7,32 @@ user controller berguna untuk mengelola logika untuk management USER
 */
 
 // Get all users
+// export const getAllUsers = async (req, res) => {
+//   try {
+//     const users = await User.getAll();
+//     res.json(createResponse("Users fetched successfully", users));
+//   } catch (err) {
+//     res.status(500).json(createResponse("Error fetching users", err.message));
+//   }
+// };
+
+// paginated data
 export const getAllUsers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
   try {
-    const users = await User.getAll();
-    res.json(createResponse("Users fetched successfully", users));
+    const users = await User.getPaginated(page, limit);
+    const totalItems = await User.count();
+
+    res.json(
+      createResponse("Users fetched successfully", {
+        totalItems,
+        totalPages: Math.ceil(totalItems / limit),
+        currentPage: page,
+        users,
+      })
+    );
   } catch (err) {
     res.status(500).json(createResponse("Error fetching users", err.message));
   }
@@ -49,7 +71,7 @@ export const updateUser = async (req, res) => {
     if (!result) {
       return res.status(404).json(createResponse("User not found", null));
     }
-    res.json(createResponse("User updated successfully", {updatedId : id}));
+    res.json(createResponse("User updated successfully", { updatedId: id }));
   } catch (err) {
     res.status(500).json(createResponse("Error updating user", err.message));
   }
@@ -63,8 +85,8 @@ export const deleteUser = async (req, res) => {
     if (!result) {
       return res.status(404).json(createResponse("User not found", null));
     }
-    res.json(createResponse("User deleted successfully", {deletedId:id}));
+    res.json(createResponse("User deleted successfully", { deletedId: id }));
   } catch (err) {
     res.status(500).json(createResponse("Error deleting user", err.message));
   }
-}
+};
