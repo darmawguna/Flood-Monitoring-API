@@ -33,7 +33,6 @@ const User = {
       const insertId = await new Promise((resolve, reject) => {
         db.query("INSERT INTO user SET ?", newUser, (err, results) => {
           if (err) return reject(err);
-          console.log(results.insertId);
           resolve(results.insertId);
         });
       });

@@ -15,6 +15,7 @@ const Sensor = {
           resolve(results);
         });
       });
+      return result;
     } catch (err) {
       throw new Error("Error fetching sensors: " + err.message);
     }
@@ -29,6 +30,7 @@ const Sensor = {
           resolve(results);
         });
       });
+      return result;
     } catch (err) {
       throw new Error("Error fetching selected sensor: " + err.message);
     }
@@ -39,7 +41,7 @@ const Sensor = {
       const insertId = await new Promise((resolve, reject) => {
         db.query("INSERT INTO sensor SET ?", newSensor, (err, results) => {
           if (err) return reject(err);
-          resolve(results.sensor_id);
+          resolve(results.insertId);
         });
       });
       return insertId;
@@ -56,7 +58,7 @@ const Sensor = {
           resolve(results);
         });
       });
-      return results;
+      return id;
     } catch (err) {
       throw new Error("Error updating sensor: " + err.message);
     }
@@ -65,7 +67,7 @@ const Sensor = {
     if (!id) throw new Error("Sensor ID is required");
     try {
       const results = await new Promise((resolve, reject) => {
-        db.query("DELETE FROM Alert WHERE sensor_id = ?", [id], (err, results) => {
+        db.query("DELETE FROM sensor WHERE sensor_id = ?", [id], (err, results) => {
           if (err) return reject(err);
           resolve(results);
         });

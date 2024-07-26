@@ -1,9 +1,12 @@
 import express from "express";
-import { getAllSensors } from "../controllers/sensorController.js";
+import { createSensor, getAllSensors, getSensor, updateSensor, deleteSensor } from "../controllers/sensorController.js";
 
 const router = express.Router();
 
 router.get("/", getAllSensors);
-// Define other routes similarly...
+router.get("/:id", getSensor);
+router.post("/", createSensor);
+router.put("/:id", updateSensor);
+router.delete("/:id", deleteSensor);
 
 export default router;
