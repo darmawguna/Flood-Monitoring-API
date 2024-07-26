@@ -1,10 +1,30 @@
 import Sensor from "../models/sensor.js";
 import createResponse from "../utils/responseFormat.js";
 
+// export const getAllSensors = async (req, res) => {
+//   try {
+//     const sensors = await Sensor.getAll();
+//     res.json(createResponse("Sensors fetched successfully", sensors));
+//   } catch (err) {
+//     res.status(500).json(createResponse("Error fetching sensors", err.message));
+//   }
+// };
+
 export const getAllSensors = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
   try {
-    const sensors = await Sensor.getAll();
-    res.json(createResponse("Sensors fetched successfully", sensors));
+    const sensors = await Sensor.getPaginated(page, limit);
+    const totalItems = await Sensor.count();
+    res.json(
+      createResponse("Sensors fetched successfully", {
+        totalItems,
+        totalPages: Math.ceil(totalItems / limit),
+        currentPage: page,
+        sensors,
+      })
+    );
   } catch (err) {
     res.status(500).json(createResponse("Error fetching sensors", err.message));
   }

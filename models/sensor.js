@@ -7,6 +7,33 @@ bertugas untuk melakukan query ke database
 */
 
 const Sensor = {
+  getPaginated: async (page, limit) => {
+    const offset = (page - 1) * limit;
+    try {
+      const results = await new Promise((resolve, reject) => {
+        db.query("SELECT * FROM sensor LIMIT ? OFFSET ?", [limit, offset], (err, results) => {
+          if (err) return reject(err);
+          resolve(results);
+        });
+      });
+      return results;
+    } catch (err) {
+      throw new Error("Error fetching paginated sensor: " + err.message);
+    }
+  },
+  count: async () => {
+    try {
+      const results = await new Promise((resolve, reject) => {
+        db.query("SELECT COUNT(*) AS total FROM sensor", (err, results) => {
+          if (err) return reject(err);
+          resolve(results[0].total);
+        });
+      });
+      return results;
+    } catch (err) {
+      throw new Error("Error counting sensor: " + err.message);
+    }
+  },
   getAll: async () => {
     try {
       const result = await new Promise((resolve, reject) => {

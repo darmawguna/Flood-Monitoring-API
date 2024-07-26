@@ -3,6 +3,7 @@ import { createSensor, getAllSensors, getSensor, updateSensor, deleteSensor } fr
 
 const router = express.Router();
 
+
 router.get("/", getAllSensors);
 router.get("/:id", getSensor);
 router.post("/", createSensor);
