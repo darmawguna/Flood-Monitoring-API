@@ -1,6 +1,11 @@
 import User from "../models/user.js";
 import createResponse from "../utils/responseFormat.js";
 
+/*
+user controller berguna untuk mengelola logika untuk management USER
+
+*/
+
 // Get all users
 export const getAllUsers = async (req, res) => {
   try {

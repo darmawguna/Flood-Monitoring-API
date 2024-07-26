@@ -1,5 +1,11 @@
 import db from "../config/db.js";
 
+/*
+userModel digunakan untuk berkomunikasi dengan table user pada  Database 
+terhubung dengan config db 
+bertugas untuk melakukan query ke database
+*/
+
 const Sensor = {
   getAll: async () => {
     try {
