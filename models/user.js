@@ -1,7 +1,7 @@
 import db from "../config/db.js";
 
 const User = {
-  getPaginated: async (page, limit) => {
+  getPaginated: async (page, limit = 10) => {
     const offset = (page - 1) * limit;
     try {
       const results = await new Promise((resolve, reject) => {
@@ -46,7 +46,7 @@ const User = {
     if (!id) throw new Error("User ID is required");
     try {
       const results = await new Promise((resolve, reject) => {
-        db.query("SELECT * FROM user WHERE user_id = ?", [id], (err, results) => {
+        db.query("SELECT * FROM user WHERE id = ?", [id], (err, results) => {
           if (err) return reject(err);
           resolve(results[0]);
         });
@@ -73,7 +73,7 @@ const User = {
     if (!id) throw new Error("Sensor ID is required");
     try {
       const results = await new Promise((resolve, reject) => {
-        db.query("UPDATE user SET ? WHERE user_id = ?", [updateUser, id], (err, results) => {
+        db.query("UPDATE user SET ? WHERE id = ?", [updateUser, id], (err, results) => {
           if (err) return reject(err);
           console.log(results);
           resolve(results);
@@ -88,7 +88,7 @@ const User = {
     if (!id) throw new Error("User ID is required");
     try {
       const results = await new Promise((resolve, reject) => {
-        db.query("DELETE FROM user WHERE user_id = ?", [id], (err, results) => {
+        db.query("DELETE FROM user WHERE id = ?", [id], (err, results) => {
           if (err) return reject(err);
           resolve(results);
         });

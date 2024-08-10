@@ -54,10 +54,17 @@ export const getUser = async (req, res) => {
 // Create a new user
 export const createUser = async (req, res) => {
   const newUser = req.body;
+
+  // Validate request body
+  if (!newUser.name || !newUser.email || !newUser.phone_number || !newUser.location || !newUser.latitude || !newUser.longitude) {
+    return res.status(400).json(createResponse("All fields are required"));
+  }
+
   try {
     const insertId = await User.create(newUser);
     res.status(201).json(createResponse("User created successfully", { userId: insertId }));
   } catch (err) {
+    console.error("Error creating user:", err); // Log error for debugging
     res.status(500).json(createResponse("Error creating user", err.message));
   }
 };

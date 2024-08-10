@@ -44,6 +44,17 @@ export const getSensor = async (req, res) => {
 
 export const createSensor = async (req, res) => {
   const newSensor = req.body;
+  console.log(newSensor);
+  if (
+    !newSensor.description ||
+    !newSensor.installation_date ||
+    !newSensor.status ||
+    !newSensor.location ||
+    !newSensor.latitude ||
+    !newSensor.longitude
+  ) {
+    return res.status(400).json(createResponse("All fields are required"));
+  }
   try {
     const insertId = await Sensor.create(newSensor);
     res.status(201).json(createResponse("Sensor created successfully", { sensorId: insertId }));

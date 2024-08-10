@@ -52,7 +52,7 @@ const Sensor = {
     if (!id) throw new Error("Alert ID is required");
     try {
       const result = await new Promise((resolve, reject) => {
-        db.query("SELECT * FROM sensor where sensor_id = ? ", [id], (err, results) => {
+        db.query("SELECT * FROM sensor where id = ? ", [id], (err, results) => {
           if (err) return reject(err);
           resolve(results);
         });
@@ -80,7 +80,7 @@ const Sensor = {
     if (!id) throw new Error("Sensor ID is required");
     try {
       const results = await new Promise((resolve, reject) => {
-        db.query("UPDATE sensor SET ? WHERE sensor_id = ?", [updateSensor, id], (err, results) => {
+        db.query("UPDATE sensor SET ? WHERE id = ?", [updateSensor, id], (err, results) => {
           if (err) return reject(err);
           resolve(results);
         });
@@ -94,7 +94,7 @@ const Sensor = {
     if (!id) throw new Error("Sensor ID is required");
     try {
       const results = await new Promise((resolve, reject) => {
-        db.query("DELETE FROM sensor WHERE sensor_id = ?", [id], (err, results) => {
+        db.query("DELETE FROM sensor WHERE id = ?", [id], (err, results) => {
           if (err) return reject(err);
           resolve(results);
         });
