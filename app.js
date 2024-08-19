@@ -1,12 +1,12 @@
 import express from "express";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
+import http from "http";
 
 dotenv.config();
 
 const app = express();
-
 // Daftar asal (origin) yang diizinkan
 const allowedOrigins = [
   // 'https://example.com', // Aplikasi Web
@@ -39,7 +39,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Routes
 import sensorRoutes from "./routes/sensorRoutes.js";
@@ -47,8 +47,9 @@ import waterLevelRoutes from "./routes/waterlevelRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import alertRoutes from "./routes/alertRoutes.js";
 // TODO update routes dengan prefix /api
-app.use("/sensors", sensorRoutes);
-app.use("/users", userRoutes);
+app.use("/api/sensors", sensorRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/waterlevels", waterLevelRoutes);
 app.use("/alerts", alertRoutes);
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -60,4 +61,5 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-export default app;
+const server = http.createServer(app);
+export default server;

@@ -1,7 +1,6 @@
-import http from "http";
-import app from "./app.js";
-
-const server = http.createServer(app);
+import server from "./app.js";
+import { initWaterLevelWebSocket } from "./sockets/waterLevelSocket.js";
+initWaterLevelWebSocket(server);
 
 const PORT = process.env.PORT || 3000;
 

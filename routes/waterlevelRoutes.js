@@ -1,9 +1,8 @@
 import express from "express";
-import { getAllWaterLevels } from "../controllers/waterlevelController.js";
-
 const router = express.Router();
+import { createWaterLevel } from "../controllers/waterlevelController.js";
+// Route untuk mengakses WebSocket
 
-router.get("/", getAllWaterLevels);
-// Define other routes similarly...
+router.post("/", createWaterLevel);
 
 export default router;

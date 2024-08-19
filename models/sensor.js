@@ -49,7 +49,7 @@ const Sensor = {
   },
 
   getById: async (id) => {
-    if (!id) throw new Error("Alert ID is required");
+    if (!id) throw new Error("Sensor ID is required");
     try {
       const result = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM sensor where id = ? ", [id], (err, results) => {
