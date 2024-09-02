@@ -1,14 +1,9 @@
 import { Server as WebSocketServer } from "socket.io";
 
-export let waterLevelsNamespace; // Untuk menyimpan namespace
+export let waterLevelsNamespace;
 
 export function initWaterLevelWebSocket(server) {
-  const io = new WebSocketServer(server, {
-    cors: {
-      origin: "http://localhost:5173", // Ganti dengan URL frontend Anda
-      methods: ["GET", "POST"],
-    },
-  });
+    const io = new WebSocketServer(server);
 
   // Namespace untuk WebSocket di route /water-levels
   waterLevelsNamespace = io.of("/water-levels");
@@ -25,6 +20,15 @@ export function initWaterLevelWebSocket(server) {
       connectedClients--;
       console.log(`User disconnected from /water-levels. Total clients: ${connectedClients}`);
       waterLevelsNamespace.emit("clientCount", connectedClients);
+    });
+
+    // Ketika client memilih sensor
+    socket.on("selectSensor", (sensorId) => {
+      console.log(`Client ${socket.id} selected sensor: ${sensorId}`);
+      socket.join(sensorId); // Masukkan client ke room berdasarkan sensorId
+
+      // Emit pesan selamat datang dengan sensor yang dipilih
+      socket.emit("sensorSelected", `You have joined the room for sensor: ${sensorId}`);
     });
 
     socket.on("waterLevel", (msg) => {

@@ -1,14 +1,7 @@
 import Sensor from "../models/sensor.js";
 import createResponse from "../utils/responseFormat.js";
 
-// export const getAllSensors = async (req, res) => {
-//   try {
-//     const sensors = await Sensor.getAll();
-//     res.json(createResponse("Sensors fetched successfully", sensors));
-//   } catch (err) {
-//     res.status(500).json(createResponse("Error fetching sensors", err.message));
-//   }
-// };
+
 
 export const getAllSensors = async (req, res) => {
   const page = parseInt(req.query.page) || 1;

@@ -9,12 +9,9 @@ dotenv.config();
 const app = express();
 // Daftar asal (origin) yang diizinkan
 const allowedOrigins = [
-  // 'https://example.com', // Aplikasi Web
   "http://localhost:5173", // Aplikasi Web saat pengembangan
-  // TODO tambahkan alamat ip untuk laptop klien kgeo
   "http://192.168.100.126:5173", // alamat IP laptop Nanda
   "http://192.168.100.126", // alamat IP laptop klien
-  "https://idx.google.com/client-testing-1607078", // alamat Project IDX
   // 'capacitor://localhost', // Aplikasi Mobile dengan Capacitor
   // 'ionic://localhost', // Aplikasi Mobile dengan Ionic
   // 'file://' // Aplikasi Mobile yang diakses dari file lokal
@@ -46,7 +43,6 @@ import sensorRoutes from "./routes/sensorRoutes.js";
 import waterLevelRoutes from "./routes/waterlevelRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import alertRoutes from "./routes/alertRoutes.js";
-// TODO update routes dengan prefix /api
 app.use("/api/sensors", sensorRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/waterlevels", waterLevelRoutes);
